@@ -1,9 +1,6 @@
 import { RuntimeMessage } from '../types/Runtime';
 
-// This script does not communicate with the DOM
-console.log('Running background script (see chrome extensions page)');
-
-
+console.log('Running Vine Helper background script');
 
 /// Globals
 let activeTabId: number;

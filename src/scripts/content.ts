@@ -1,7 +1,7 @@
 // This script has access to the DOM
 
 import { RuntimeMessage } from '../types/Runtime';
-console.log('Running content script');
+console.log('Running Vine Helper content script');
 
 // Listen for messages from background script
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, sender, sendResponse) => {
