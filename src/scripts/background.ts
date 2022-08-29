@@ -7,7 +7,7 @@ console.log('Running background script (see chrome extensions page)');
 
 /// Globals
 let activeTabId: number;
-chrome.tabs.query({ active: true }).then((tab) => activeTabId = tab[0].id);
+chrome.tabs.query({ active: true }).then((tab) => activeTabId = tab[0].id as number);
 
 // Listen for messages from popup or content script
 chrome.runtime.onMessage.addListener((message: RuntimeMessage, sender, sendResponse) => {
