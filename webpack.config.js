@@ -7,9 +7,9 @@ module.exports = {
   mode: process.env.NODE_ENV,
   devtool: 'inline-source-map',
   entry: {
-    content: './src/app/content.ts',
-    background: './src/app/background.ts',
-    popup: './src/ui/index.tsx',
+    content: './src/scripts/content.ts',
+    background: './src/scripts/background.ts',
+    popup: './src/popup/index.tsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -63,7 +63,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/ui/popup.html',
+      template: './src/popup/popup.html',
       filename: 'popup.html',
       chunks: ['popup']
     })
