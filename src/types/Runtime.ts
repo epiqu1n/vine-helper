@@ -1,4 +1,6 @@
+import MESSAGE_TYPES from './MessageTypes';
+
 export interface RuntimeMessage {
-  type: string,
+  type: MESSAGE_TYPES,
   payload?: unknown
 }
