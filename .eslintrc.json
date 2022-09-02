@@ -26,6 +26,7 @@
       "vars": "local",
       "args": "none"
     }],
+    "@typescript-eslint/no-empty-interface": "off",
     "no-case-declarations": "off",
     "prefer-const": "warn",
     "quotes": ["warn", "single"],

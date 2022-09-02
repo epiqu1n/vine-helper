@@ -4,7 +4,7 @@
   "manifest_version": 3,
   "icons": {
   },
-  "permissions": [ "tabs" ],
+  "permissions": [ "tabs", "storage" ],
   "description": "Enhances the Amazon Vine browsing experience",
   "action": {
     "default_title": "Vine Helper",

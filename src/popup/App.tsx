@@ -1,4 +1,4 @@
-import '../styles/popup.scss';
+import './styles/popup.scss';
 
 export default function App() {
   return (
