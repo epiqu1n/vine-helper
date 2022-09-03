@@ -5,7 +5,7 @@ export interface Item {
   recId: string
 }
 
-export type ItemSet = { [href: string]: Item };
+export type ItemSet = { [sku: string]: Item };
 
 export interface Category {
   items: ItemSet,
