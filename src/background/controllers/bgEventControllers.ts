@@ -40,7 +40,7 @@ async function requestUpdateNewItems(tabInfo: chrome.tabs.Tab) {
   if (!tabInfo.url || !tabInfo.id) throw new Error('Missing tab information');
 
   const category = getCurrentCategory(tabInfo.url);
-  await sendTabMessage(tabInfo.id, CMT.UPDATE_NEW_ITEMS, { url: category });
+  await sendTabMessage(tabInfo.id, CMT.UPDATE_NEW_ITEMS, { catUrl: category });
 }
 
 /** Gets the current category on the page */

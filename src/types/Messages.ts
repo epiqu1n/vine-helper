@@ -10,7 +10,7 @@ export enum ContentMessageType {
 /** Payload and response data for messages intended for content scripts */
 export interface ContentMessageData extends Record<ContentMessageType, MessageData> {
   [ContentMessageType.UPDATE_NEW_ITEMS]: {
-    payload: { url: string },
+    payload: { catUrl: string },
     response: undefined
   }
 }
