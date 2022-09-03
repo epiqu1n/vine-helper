@@ -10,8 +10,7 @@ export const handleBgMessage: BgMessageHandler = ({ type, payload }, sender, sen
   // console.log('Background received a message:', { type, payload });
 
   // Must use "Go to Implementations" to link to message controller method definitions
-  // Use `return true` instead of `break` if it is necessary to send an asynchronous response
-  // Always send a response after each controller is complete! async-await can't be used here :(
+  // Always send a response using `.then()` after each controller is complete! async-await can't be used here :(
   switch (type) {
     default:
       // Send an empty response so that sender Promise can resolve
