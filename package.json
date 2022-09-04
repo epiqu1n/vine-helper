@@ -1,17 +1,16 @@
 {
-  "name": "parroteer",
-  "version": "0.1.0",
+  "name": "vine-helper",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color",
-    "build": "NODE_ENV=production webpack",
-    "build-watch": "NODE_ENV=development webpack --watch"
+    "test": "jest --verbose",
+    "dev": "NODE_ENV=development webpack --watch",
+    "build": "NODE_ENV=production webpack"
   },
   "keywords": [],
   "author": "",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
     "@types/chrome": "^0.0.193",

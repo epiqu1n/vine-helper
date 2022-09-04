@@ -7,7 +7,7 @@ const cssLoaderOpts = {
   loader: 'css-loader',
   options: {
     modules: {
-      localIdentName: '[name]__[local]--[hash:base64:6]'
+      localIdentName: process.env.NODE_ENV === 'development' ? '[name]__[local]--[hash:base64:6]' : '[hash:base64:8]'
     },
   },
 };
@@ -44,27 +44,6 @@ module.exports = {
         use: ['style-loader', cssLoaderOpts, 'sass-loader'],
       }
     ]
-  },
-  devServer: {
-    host: 'localhost',
-    port: 8080,
-    hot: true,
-    historyApiFallback: true,
-    static: {
-      directory: path.resolve(__dirname, 'dist'),
-      publicPath: '/'
-    },
-    // headers: { 'Access-Control-Allow-Origin': '*' },
-    proxy: {
-      '/api/**': {
-        target: 'http://localhost:3000/',
-        secure: false
-      },
-      '/assets/**': {
-        target: 'http://localhost:3000/',
-        secure: false
-      }
-    }
   },
   plugins: [
     new HtmlWebpackPlugin({
