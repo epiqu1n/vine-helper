@@ -2,7 +2,8 @@ export interface Item {
   imageUrl: string,
   inputBtn: string,
   title: string,
-  recId: string
+  recId: string,
+  isParentAsin: boolean
 }
 
 export type ItemSet = { [sku: string]: Item };

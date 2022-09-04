@@ -27,7 +27,8 @@ export async function getCurrentItems(catUrl: string) {
         recId: itemEl.dataset.recommendationId as string,
         imageUrl: itemEl.dataset.imgUrl as string,
         inputBtn: (itemEl.querySelector('.vvp-details-btn') as HTMLElement).outerHTML,
-        title: (itemEl.querySelector('.a-link-normal .a-truncate-full') as HTMLSpanElement).innerText
+        title: (itemEl.querySelector('.a-link-normal .a-truncate-full') as HTMLSpanElement).innerText,
+        isParentAsin: (itemEl.querySelector('input.a-button-input') as HTMLInputElement).dataset.isParentAsin === 'true'
       };
     }
   }
