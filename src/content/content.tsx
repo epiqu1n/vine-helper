@@ -4,8 +4,6 @@ import App from './ItemGrid/App';
 
 console.info('Running Vine Helper content script');
 
-// TODO: Set up section at top for new items
-
 
 /// Tab event listeners
 chrome.runtime.onMessage.addListener(handleContentMessage);

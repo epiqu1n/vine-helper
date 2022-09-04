@@ -7,6 +7,7 @@ type MessageData = { payload: Payload, response?: Payload };
 export enum ContentMessageType {
   UPDATE_NEW_ITEMS = 'UPDATE_NEW_ITEMS'
 }
+
 /** Payload and response data for messages intended for content scripts */
 export interface ContentMessageData extends Record<ContentMessageType, MessageData> {
   [ContentMessageType.UPDATE_NEW_ITEMS]: {
