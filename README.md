@@ -12,3 +12,6 @@ Whenever you check a category, Vine Helper determines which items are new since 
 
 ### Disclaimer
 Vine Helper is _not_ a bot and does not automatically purchase / order items. It is only a tool to enhance the _browsing_ experience for users.
+
+### License
+This software is provided under the [MIT License](LICENSE)
