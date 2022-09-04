@@ -1,0 +1,12 @@
+.vh {
+  &-section {
+    margin-bottom: 2rem;
+  }
+
+  &-item-list {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: auto;
+    margin: 0;
+  }
+}
