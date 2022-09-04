@@ -2,12 +2,22 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+/** @type {import('webpack').RuleSetUseItem} */
+const cssLoaderOpts = {
+  loader: 'css-loader',
+  options: {
+    modules: {
+      localIdentName: '[name]__[local]--[hash:base64:6]'
+    },
+  },
+};
+
 /** @type {import('webpack').Configuration} */
 module.exports = {
   mode: process.env.NODE_ENV,
   devtool: 'inline-source-map',
   entry: {
-    content: './src/content/content.ts',
+    content: './src/content/content.tsx',
     background: './src/background/background.ts',
     popup: './src/popup/index.tsx',
   },
@@ -29,14 +39,9 @@ module.exports = {
         loader: 'ts-loader'
       },
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', cssLoaderOpts, 'sass-loader'],
       }
     ]
   },

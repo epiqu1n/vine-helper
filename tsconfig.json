@@ -71,6 +71,7 @@
     "node_modules",
   ],
   "include": [
+    "src/styles.d.ts",
     "src/**/*"
   ]
 }
