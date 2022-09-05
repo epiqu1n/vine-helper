@@ -14,8 +14,8 @@ type MessageListenerStore = {
 
 const messageListeners: MessageListenerStore = {};
 
-interface ListenerTypes extends Record<CMT, (data: any) => void> {
-  [CMT.UPDATE_NEW_ITEMS]: (items: ItemSet) => void
+interface ListenerTypes extends Record<CMT, (...data: never[]) => void> {
+  [CMT.UPDATE_NEW_ITEMS]: (newItems: ItemSet, allItems: ItemSet) => void
 }
 
 export function registerMessageListener<T extends CMT>(type: T, callback: ListenerTypes[T]): void {
@@ -40,7 +40,7 @@ const contentMessageController: ContentMessageController = {
     setLastItems(catUrl, currItems);
 
     const listener = messageListeners[CMT.UPDATE_NEW_ITEMS];
-    if (typeof listener === 'function') listener(currItems); // DEBUG currItems -> newItems
+    if (typeof listener === 'function') listener(newItems, currItems);
   }
 };
 

@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { ItemSet } from '../../../types/Items';
 import { ContentMessageType as CMT } from '../../../types/Messages';
 import { registerMessageListener } from '../../controllers/contentMessageController';
-import ItemTile from '../components/ItemTile';
+import ItemTile from './ItemTile';
 import styles from '../styles/ItemGrid.module.scss';
 
 export default function ItemGrid() {
   const [newItems, setNewItems] = useState<ItemSet>({});
+  const [catItems, setCatItems] = useState<ItemSet>({});
   const [isLoading, setIsLoading] = useState(true);
-  registerMessageListener(CMT.UPDATE_NEW_ITEMS, (items) => {
-    setNewItems(items);
+
+  registerMessageListener(CMT.UPDATE_NEW_ITEMS, (newItems, allItems) => {
+    setNewItems(newItems);
+    setCatItems(allItems);
     setIsLoading(false);
   });
 
