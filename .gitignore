@@ -2,8 +2,10 @@
 .DS_Store
 
 # Build output
-dist/**/*
+dist
 !dist/manifest.json
+.tmp
+builds
 
 # Logs
 logs
