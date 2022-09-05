@@ -2,7 +2,7 @@ import { ItemMap } from '../types/Items';
 const domParser = new DOMParser();
 
 /** Gets all of the items for the given category url */
-export async function getCurrentItems(catUrl: string) {
+export async function getCategoryItems(catUrl: string) {
   const items: ItemMap = {};
 
   // Determine number of pages
@@ -34,18 +34,44 @@ export async function getCurrentItems(catUrl: string) {
     }
   }
 
-  return items;
+  const storedItems = await getStoredItems(catUrl);
+  const newItems = checkNewItems(storedItems, items);
+  setStoredItems(catUrl, newItems)
+  .catch((err) => console.error(err));
+
+  return {
+    allItems: items,
+    newItems
+  };
 }
 
 /** Gets the last stored items for a given category url */
-export async function getLastItems(catUrl: string): Promise<ItemMap> {
+export async function getStoredItems(catUrl: string): Promise<ItemMap> {
   const catKey = `cached-items-${catUrl}`;
   const items = (await chrome.storage.local.get(catKey))[catKey] as ItemMap;
   return items;
 }
 
 /** Updates the last stored items for a given category url */
-export async function setLastItems(catUrl: string, items: ItemMap): Promise<void> {
+export async function setStoredItems(catUrl: string, items: ItemMap): Promise<void> {
   const catKey = `cached-items-${catUrl}`;
   await chrome.storage.local.set({ [catKey]: items});
+}
+
+/** Gets the current category on the page */
+export function getCategoryUrl(url: string) {
+  const { queue, pn, cn } = Object.fromEntries((new URL(url)).searchParams);
+  const category = `?queue=${queue}&pn=${pn || ''}&cn=${cn || ''}`;
+  return category;
+}
+
+/** Checks current items against previous items and returns which ones are new */
+export function checkNewItems(prev: ItemMap, curr: ItemMap): ItemMap {
+  if (!prev) return {};
+
+  const newItems: ItemMap = {};
+  for (const sku in curr) {
+    if (!(sku in prev)) newItems[sku] = curr[sku];
+  }
+  return newItems;
 }

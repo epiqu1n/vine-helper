@@ -5,15 +5,11 @@ type MessageData = { payload: Payload, response?: Payload };
 
 /** Types for messages intended for content scripts */
 export enum ContentMessageType {
-  UPDATE_NEW_ITEMS = 'UPDATE_NEW_ITEMS'
 }
 
 /** Payload and response data for messages intended for content scripts */
 export interface ContentMessageData extends Record<ContentMessageType, MessageData> {
-  [ContentMessageType.UPDATE_NEW_ITEMS]: {
-    payload: { catUrl: string },
-    response: undefined
-  }
+  
 }
 
 /** General structure of a message intended for content scripts */
@@ -27,7 +23,7 @@ export interface ContentMessage {
 
 /** Types for messages intended for background scripts */
 export enum BgMessageType {
-  
+
 }
 
 /** Payload and response data for messages intended for background scripts */
