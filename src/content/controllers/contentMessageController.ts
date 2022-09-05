@@ -1,5 +1,5 @@
 import { getCurrentItems, getLastItems, setLastItems } from '../../modules/items';
-import { ItemSet } from '../../types/Items';
+import { ItemMap } from '../../types/Items';
 import { ContentMessageData, ContentMessageType as CMT } from '../../types/Messages';
 
 type ContentMessageHandler<T extends CMT> = (payload: ContentMessageData[T]['payload']) => Promise<void>
@@ -15,7 +15,7 @@ type MessageListenerStore = {
 const messageListeners: MessageListenerStore = {};
 
 interface ListenerTypes extends Record<CMT, (...data: never[]) => void> {
-  [CMT.UPDATE_NEW_ITEMS]: (newItems: ItemSet, allItems: ItemSet) => void
+  [CMT.UPDATE_NEW_ITEMS]: (newItems: ItemMap, allItems: ItemMap) => void
 }
 
 export function registerMessageListener<T extends CMT>(type: T, callback: ListenerTypes[T]): void {
@@ -29,12 +29,11 @@ const contentMessageController: ContentMessageController = {
   [CMT.UPDATE_NEW_ITEMS]: async (payload) => {
     const { catUrl } = payload;
     const currItems = await getCurrentItems(catUrl);
-    console.log('Current items:', currItems);
+    console.debug('Current items:', currItems);
 
-    // TODO: Determine which items are new and display them
     const lastItems = await getLastItems(catUrl);
     const newItems = checkNewItems(lastItems, currItems);
-    console.log('New items:', newItems);
+    console.debug('New items:', newItems);
 
     // Update item cache for category
     setLastItems(catUrl, currItems);
@@ -50,10 +49,10 @@ export default {
 // export default contentMessageController;
 
 /// Auxiliary functions
-function checkNewItems(prev: ItemSet, curr: ItemSet): ItemSet {
+function checkNewItems(prev: ItemMap, curr: ItemMap): ItemMap {
   if (!prev) return {};
 
-  const newItems: ItemSet = {};
+  const newItems: ItemMap = {};
   for (const sku in curr) {
     if (!(sku in prev)) newItems[sku] = curr[sku];
   }

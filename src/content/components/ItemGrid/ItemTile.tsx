@@ -2,11 +2,10 @@ import { Item } from '../../../types/Items';
 import styles from '../styles/ItemTile.module.scss';
 
 interface ItemTileProps {
-  sku: string,
   item: Item
 }
 
-export default function ItemTile({ sku, item }: ItemTileProps) {
+export default function ItemTile({ item }: ItemTileProps) {
   return (
     <div className={`vvp-item-tile ${styles['vh-item-tile']}`}
       data-recommendation-id={item.recId}
@@ -15,7 +14,7 @@ export default function ItemTile({ sku, item }: ItemTileProps) {
       <div className={`vvp-item-tile-content ${styles['vh-item-tile-content']}`}>
         <img alt="" src={item.imageUrl} />
         <div className="vvp-item-product-title-container">
-          <a className="a-link-normal" target="_blank" rel="noreferrer" href={`/dp/${sku}`}>
+          <a className="a-link-normal" target="_blank" rel="noreferrer" href={`/dp/${item.sku}`}>
             <span className="a-truncate"
               data-a-word-break="normal"
               data-a-max-rows="2"
@@ -39,7 +38,7 @@ export default function ItemTile({ sku, item }: ItemTileProps) {
         <span className="a-button a-button-primary vvp-details-btn" id="a-autoid-0">
           <span className="a-button-inner">
             <input
-              data-asin={sku}
+              data-asin={item.sku}
               data-is-parent-asin={item.isParentAsin}
               data-recommendation-id={item.recId}
               data-recommendation-type="VENDOR_TARGETED"

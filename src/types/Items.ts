@@ -1,4 +1,5 @@
 export interface Item {
+  sku: string,
   imageUrl: string,
   inputBtn: string,
   title: string,
@@ -6,9 +7,10 @@ export interface Item {
   isParentAsin: boolean
 }
 
-export type ItemSet = { [sku: string]: Item };
+export type ItemMap = { [sku: string]: Item }
+export interface ItemList extends Array<Item & { sku: string }> {}
 
 export interface Category {
-  items: ItemSet,
+  items: ItemMap,
   lastCheck: number
 }

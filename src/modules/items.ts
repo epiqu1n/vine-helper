@@ -1,9 +1,9 @@
-import { ItemSet } from '../types/Items';
+import { ItemMap } from '../types/Items';
 const domParser = new DOMParser();
 
 /** Gets all of the items for the given category url */
 export async function getCurrentItems(catUrl: string) {
-  const items: ItemSet = {};
+  const items: ItemMap = {};
 
   // Determine number of pages
   const maxPage = parseInt((document.querySelector('ul.a-pagination > li.a-normal:nth-last-of-type(2) > a') as HTMLLinkElement)?.innerText) || 1;
@@ -24,6 +24,7 @@ export async function getCurrentItems(catUrl: string) {
       }
 
       items[sku] = {
+        sku,
         recId: itemEl.dataset.recommendationId as string,
         imageUrl: itemEl.dataset.imgUrl as string,
         inputBtn: (itemEl.querySelector('.vvp-details-btn') as HTMLElement).outerHTML,
@@ -37,14 +38,14 @@ export async function getCurrentItems(catUrl: string) {
 }
 
 /** Gets the last stored items for a given category url */
-export async function getLastItems(catUrl: string): Promise<ItemSet> {
+export async function getLastItems(catUrl: string): Promise<ItemMap> {
   const catKey = `cached-items-${catUrl}`;
-  const items = (await chrome.storage.local.get(catKey))[catKey] as ItemSet;
+  const items = (await chrome.storage.local.get(catKey))[catKey] as ItemMap;
   return items;
 }
 
 /** Updates the last stored items for a given category url */
-export async function setLastItems(catUrl: string, items: ItemSet): Promise<void> {
+export async function setLastItems(catUrl: string, items: ItemMap): Promise<void> {
   const catKey = `cached-items-${catUrl}`;
   await chrome.storage.local.set({ [catKey]: items});
 }
