@@ -1,6 +1,6 @@
 import { handleContentMessage } from './controllers/contentEventController';
 import { createRoot } from 'react-dom/client';
-import App from './ItemGrid/App';
+import App from './components/App';
 
 console.info('Running Vine Helper content script');
 
