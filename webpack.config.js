@@ -15,7 +15,7 @@ const cssLoaderOpts = {
 /** @type {import('webpack').Configuration} */
 module.exports = {
   mode: process.env.NODE_ENV,
-  devtool: process.env.NODE_ENV === 'development' && 'eval-cheap-module-source-map',
+  devtool: process.env.NODE_ENV === 'development' && 'inline-source-map',
   entry: {
     content: './src/content/content.tsx',
     background: './src/background/background.ts',
