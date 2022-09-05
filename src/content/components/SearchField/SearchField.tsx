@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { debounce, DebouncedFunc } from 'lodash';
+import React, { useMemo, useState } from 'react';
+import { debounce } from 'lodash';
 import styles from './SearchField.module.scss';
 
 interface SearchBarProps<IT> {
