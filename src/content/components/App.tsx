@@ -18,9 +18,18 @@ export default function App() {
       setIsLoading(false);
     });
   }, []);
-  
-  return (<>
-    <ItemGrid title="What's New" items={newItems} />
-    {/* <ItemGrid title="Search" items={allItems} searchable /> */}
-  </>);
+
+  if (isLoading) {
+    return (<>
+      <h2>Vine Helper</h2>
+      <h3>Loading...</h3>
+    </>);
+  }
+  else {
+    return (<>
+      <h2>Vine Helper</h2>
+      <ItemGrid title="What's New" items={newItems} />
+      {/* <ItemGrid title="Search" items={allItems} searchable /> */}
+    </>);
+  }
 }
