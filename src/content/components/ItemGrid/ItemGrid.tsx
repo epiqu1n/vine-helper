@@ -16,7 +16,7 @@ export default function ItemGrid({ items: allItems, title, searchable = false, f
   const [shownItems, setShownItems] = useState<Item[]>(searchable ? [] : allItems);
   
   const itemEls =  shownItems.map((item) => <ItemTile key={`item_${item.sku}`} item={item} />);
-  const numItemsText = shownItems.length > 0 && `(${allItems.length} ${pluralize('item', allItems.length)})`;
+  const numItemsText = shownItems.length > 0 && `(${shownItems.length} ${pluralize('item', shownItems.length)})`;
 
   return (
     <section className={styles['item-grid-section']}>
