@@ -1,5 +1,5 @@
 import { Item } from '../../../types/Items';
-import styles from '../styles/ItemTile.module.scss';
+import styles from './ItemTile.module.scss';
 
 interface ItemTileProps {
   item: Item
@@ -7,11 +7,11 @@ interface ItemTileProps {
 
 export default function ItemTile({ item }: ItemTileProps) {
   return (
-    <div className={`vvp-item-tile ${styles['vh-item-tile']}`}
+    <div className={`vvp-item-tile ${styles['item-tile']}`}
       data-recommendation-id={item.recId}
       data-img-url={item.imageUrl}
     >
-      <div className={`vvp-item-tile-content ${styles['vh-item-tile-content']}`}>
+      <div className={`vvp-item-tile-content ${styles['item-tile-content']}`}>
         <img alt="" src={item.imageUrl} />
         <div className="vvp-item-product-title-container">
           <a className="a-link-normal" target="_blank" rel="noreferrer" href={`/dp/${item.sku}`}>

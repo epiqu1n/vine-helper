@@ -1,7 +1,4 @@
-import { sendTabMessage } from '../../modules/messenger';
 import { BgMessageHandler, TabUpdatedHandler } from '../../types/Handlers';
-import { ContentMessageType as CMT } from '../../types/Messages';
-import BGMC from './bgMessageController';
 
 /// Handlers
 

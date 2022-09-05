@@ -11,8 +11,9 @@ chrome.runtime.onMessage.addListener(handleContentMessage);
 
 /// Initialize item grid React app
 const helperContainer = document.createElement('div');
-helperContainer.id = 'helper-container';
+helperContainer.id = 'vh-container';
 helperContainer.classList.add('a-section');
+helperContainer.style.borderBottom = '2px solid #b4b4b4';
 
 const buttonBarEl = document.querySelector('.a-section.vvp-items-button-and-search-container');
 if (!buttonBarEl) console.error('Error: Could not find button bar element to create Vine Helper container');

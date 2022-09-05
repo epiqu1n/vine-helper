@@ -1,0 +1,11 @@
+.warning {
+  font-size: 1.2em;
+  margin-bottom: 1rem;
+  display: inline-block;
+
+  &-label {
+    font-size: 1.1em;
+    margin-right: 0.25em;
+    color: rgb(227 90 0);
+  }
+}

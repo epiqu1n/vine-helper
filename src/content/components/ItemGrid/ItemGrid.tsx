@@ -1,24 +1,36 @@
-import { ItemList } from '../../../types/Items';
+import { Item } from '../../../types/Items';
 import ItemTile from './ItemTile';
-import styles from '../styles/ItemGrid.module.scss';
+import styles from './ItemGrid.module.scss';
 import { pluralize } from '../../../modules/utils';
+import SearchField from '../SearchField/SearchField';
+import { useState } from 'react';
 
 interface ItemGridProps {
-  items: ItemList,
+  items: Item[],
   title: string,
-  searchable?: boolean
+  searchable?: boolean,
+  filterBy?: (item: Item) => string
 }
 
-export default function ItemGrid({ items, title, searchable = false }: ItemGridProps) {
-
-  const itemEls =  items.map((item) => <ItemTile key={`item_${item.sku}`} item={item} />);
-  const numItemsText = itemEls.length > 0 && `(${items.length} ${pluralize('item', items.length)})`;
+export default function ItemGrid({ items: allItems, title, searchable = false, filterBy }: ItemGridProps) {
+  const [shownItems, setShownItems] = useState<Item[]>(searchable ? [] : allItems);
+  
+  const itemEls =  shownItems.map((item) => <ItemTile key={`item_${item.sku}`} item={item} />);
+  const numItemsText = shownItems.length > 0 && `(${allItems.length} ${pluralize('item', allItems.length)})`;
 
   return (
-    <section className={styles['vh-section']}>
-      <h3>{title} {itemEls.length > 0 && numItemsText}</h3>
-      <ul className={styles['vh-item-list']}>
-        { items.length > 0 ? itemEls : 'Nothing here!' }
+    <section className={styles['item-grid-section']}>
+      <h3>{title} {shownItems.length > 0 && numItemsText}</h3>
+      { searchable &&
+        <SearchField
+          items={allItems}
+          onFilterChange={setShownItems}
+          placeholder='Search this category...'
+          filterBy={filterBy}
+        />
+      }
+      <ul className={styles['item-grid-list']}>
+        { shownItems.length > 0 ? itemEls : searchable ? '' : 'Nothing here!' }
       </ul>
     </section>
   );

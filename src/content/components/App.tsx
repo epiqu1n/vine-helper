@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
-import { ItemList } from '../../types/Items';
+import { Item } from '../../types/Items';
 import ItemGrid from './ItemGrid/ItemGrid';
 import { getCategoryUrl, getCategoryItems } from '../../modules/items';
+import Warning from './shared/Warning';
+
+const PAGE_LIMIT = 15;
 
 export default function App() {
-  const [newItems, setNewItems] = useState<ItemList>([]);
-  const [allItems, setAllItems] = useState<ItemList>([]);
+  const [newItems, setNewItems] = useState<Item[]>([]);
+  const [allItems, setAllItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const loadEl = <div>Loading...</div>;
+  const [overPageLimit, setOverPageLimit] = useState(false);
   
   // Get new and all items for the current category
   useEffect(() => {
     const catUrl = getCategoryUrl(document.URL);
-    getCategoryItems(catUrl).then(({ allItems, newItems }) => {
+    getCategoryItems(catUrl, PAGE_LIMIT).then(({ allItems, newItems, overPageLimit }) => {
       setNewItems(Object.values(newItems));
       setAllItems(Object.values(allItems));
+      setOverPageLimit(overPageLimit);
       setIsLoading(false);
     });
   }, []);
@@ -28,8 +32,10 @@ export default function App() {
   else {
     return (<>
       <h2>Vine Helper</h2>
+      { overPageLimit && <Warning>Too many items in this category - limited queries to first and last {Math.floor(PAGE_LIMIT / 2)} pages</Warning> }
+      <br />
       <ItemGrid title="What's New" items={newItems} />
-      {/* <ItemGrid title="Search" items={allItems} searchable /> */}
+      <ItemGrid title="Search this category" items={allItems} searchable filterBy={(item) => item.title} />
     </>);
   }
 }

@@ -7,7 +7,7 @@ const cssLoaderOpts = {
   loader: 'css-loader',
   options: {
     modules: {
-      localIdentName: process.env.NODE_ENV === 'development' ? '[name]__[local]--[hash:base64:6]' : '[hash:base64:8]'
+      localIdentName: process.env.NODE_ENV === 'development' ? 'vh__[local]--[hash:base64:4]' : '[hash:base64:8]'
     },
   },
 };

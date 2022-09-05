@@ -1,9 +1,9 @@
-.vh {
+.item-grid {
   &-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
-  &-item-list {
+  &-list {
     display: flex;
     flex-flow: row nowrap;
     overflow-x: auto;

@@ -8,7 +8,6 @@ export interface Item {
 }
 
 export type ItemMap = { [sku: string]: Item }
-export interface ItemList extends Array<Item & { sku: string }> {}
 
 export interface Category {
   items: ItemMap,
