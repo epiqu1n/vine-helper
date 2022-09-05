@@ -22,6 +22,8 @@ mkdir -p ".tmp"
 cp -r "dist" ".tmp/VineHelper"
 
 mkdir -p "builds"
-zip -r "builds/${zipname}.zip" ".tmp/VineHelper"
+cd ".tmp"
+zip -r "../builds/${zipname}.zip" "VineHelper"
 
+cd "../"
 rm -rf ".tmp/VineHelper"
