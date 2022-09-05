@@ -3,7 +3,7 @@ const domParser = new DOMParser();
 
 /** Gets all of the items for the given category url */
 export async function getCategoryItems(catUrl: string) {
-  const items: ItemMap = {};
+  const currItems: ItemMap = {};
 
   // Determine number of pages
   const maxPage = parseInt((document.querySelector('ul.a-pagination > li.a-normal:nth-last-of-type(2) > a') as HTMLLinkElement)?.innerText) || 1;
@@ -23,7 +23,7 @@ export async function getCategoryItems(catUrl: string) {
         continue;
       }
 
-      items[sku] = {
+      currItems[sku] = {
         sku,
         recId: itemEl.dataset.recommendationId as string,
         imageUrl: itemEl.dataset.imgUrl as string,
@@ -34,13 +34,13 @@ export async function getCategoryItems(catUrl: string) {
     }
   }
 
-  const storedItems = await getStoredItems(catUrl);
-  const newItems = checkNewItems(storedItems, items);
-  setStoredItems(catUrl, newItems)
+  const prevItems = await getStoredItems(catUrl);
+  const newItems = checkNewItems(prevItems, currItems);
+  setStoredItems(catUrl, currItems)
   .catch((err) => console.error(err));
 
   return {
-    allItems: items,
+    allItems: currItems,
     newItems
   };
 }
