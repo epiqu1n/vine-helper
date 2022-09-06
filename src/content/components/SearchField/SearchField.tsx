@@ -28,22 +28,27 @@ export default function SearchField<IT>({
   /** Debounced function to filter items based on search */
   const filterItems_deb = useMemo(() => {
     return debounce((value: string) => {
+      // Create regex query to match all separate words (plural or not)
       const query = ignoreCase ? value.toLowerCase() : value;
       const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}?\\b)`);
-      if (!tokens || tokens.length === 0) return [];
+      const regexp = new RegExp(tokens?.join('') || '', (ignoreCase ? 'i' : ''));
 
-      const regexp = new RegExp(tokens.join(''), (ignoreCase ? 'i' : ''));
-      console.log(tokens, regexp);
+      // Make sure there are tokens, otherwise search is empty or invalid
+      const noTokens = !tokens || tokens.length === 0;
+      const matches = (
+        noTokens || (!value && filterIfNoInput) ? []
+        : items.filter((item) => {
+          const filterValue = (
+            typeof filterBy !== 'function' ? value
+            : ignoreCase ? filterBy(item).toLowerCase()
+            : filterBy(item)
+          );
 
-      const matches = !value && filterIfNoInput ? [] : items.filter((item) => {
-        const filterValue = (
-          typeof filterBy !== 'function' ? value
-          : ignoreCase ? filterBy(item).toLowerCase()
-          : filterBy(item)
-        );
+          return !!filterValue.match(regexp);
+        })
+      );
 
-        return !!filterValue.match(regexp);
-      });
+      // Trigger filter change listener
       onFilterChange(matches);
     }, DEBOUNCE_WAIT);
   }, [ignoreCase, filterIfNoInput, items, onFilterChange, filterBy]);
