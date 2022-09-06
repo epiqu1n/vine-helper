@@ -10,10 +10,20 @@ export type SearchInputHandler = (value: string) => void;
 interface SearchBarProps<IT> {
   items: IT[],
   placeholder: string,
+
+  /** Determines how to compare given options against search query */
   filterBy?: SearchInputModifer<IT>,
+
+  /** Triggered when the filtered results change */
   onFilterChange?: SearchFilterHandler<IT>,
+
+  /** A debounced input change handler */
   onInputChange?: SearchInputHandler,
+
+  /** Whether or not all results should be filtered if there is no input. Default `true` */
   filterIfNoInput?: boolean,
+
+  /** Default `true` */
   ignoreCase?: boolean
 }
 
