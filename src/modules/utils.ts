@@ -1,6 +1,6 @@
-/** Pluralizes a word if its count is not 1 */
-export function pluralize(string: string, count: number) {
-  return string + (count !== 1 ? 's' : '');
+/** Pluralizes a word if its count is not 1 (and it doesn't already end in s) */
+export function pluralize(string: string, count = 0) {
+  return string + (count !== 1 && string[string.length - 1] !== 's' ? 's' : '');
 }
 
 /** Creates an asynchronous timeout using a Promise */
