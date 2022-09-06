@@ -2,7 +2,7 @@ import { Item } from '../../../types/Items';
 import ItemTile from './ItemTile';
 import styles from './ItemGrid.module.scss';
 import { pluralize } from '../../../modules/utils';
-import SearchField from '../SearchField/SearchField';
+import SearchField, { SearchInputHandler } from '../SearchField/SearchField';
 import { useState } from 'react';
 
 interface ItemGridProps {
@@ -18,6 +18,10 @@ export default function ItemGrid({ items: allItems, title, searchable = false, f
   const itemEls =  shownItems.map((item) => <ItemTile key={`item_${item.sku}`} item={item} />);
   const numItemsText = shownItems.length > 0 && `(${shownItems.length} ${pluralize('item', shownItems.length)})`;
 
+  const handleSearchChange: SearchInputHandler = (value) => {
+    console.debug(value);
+  };
+
   return (
     <section className={styles['item-grid-section']}>
       <h3>{title} {shownItems.length > 0 && numItemsText}</h3>
@@ -25,6 +29,7 @@ export default function ItemGrid({ items: allItems, title, searchable = false, f
         <SearchField
           items={allItems}
           onFilterChange={setShownItems}
+          onInputChange={handleSearchChange}
           placeholder='Search this category...'
           filterBy={filterBy}
         />

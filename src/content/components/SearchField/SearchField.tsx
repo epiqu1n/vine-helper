@@ -3,13 +3,18 @@ import { debounce } from 'lodash';
 import styles from './SearchField.module.scss';
 import { pluralize } from '../../../modules/utils';
 
+export type SearchInputModifer<T> = (value: T) => string
+export type SearchFilterHandler<T> = (matches: T[]) => void;
+export type SearchInputHandler = (value: string) => void;
+
 interface SearchBarProps<IT> {
   items: IT[],
   placeholder: string,
-  filterBy?: (value: IT) => string,
-  onFilterChange?: (matches: IT[]) => void,
+  filterBy?: SearchInputModifer<IT>,
+  onFilterChange?: SearchFilterHandler<IT>,
+  onInputChange?: SearchInputHandler,
   filterIfNoInput?: boolean,
-  ignoreCase?: boolean,
+  ignoreCase?: boolean
 }
 
 const DEBOUNCE_WAIT = 250;
@@ -18,6 +23,7 @@ export default function SearchField<IT>({
   items,
   placeholder,
   onFilterChange,
+  onInputChange,
   filterBy,
   filterIfNoInput = true,
   ignoreCase = true,
@@ -26,8 +32,11 @@ export default function SearchField<IT>({
   const [value, setValue] = useState('');
   
   /** Debounced function to filter items based on search */
-  const filterItems_deb = useMemo(() => {
+  const handleInputDebounced = useMemo(() => {
     return debounce((value: string) => {
+      // Trigger input change listener (debounced)
+      if (typeof onInputChange === 'function') onInputChange(value);
+
       // Create regex query to match all separate words (plural or not)
       const query = ignoreCase ? value.toLowerCase() : value;
       const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}?\\b)`);
@@ -51,11 +60,11 @@ export default function SearchField<IT>({
       // Trigger filter change listener
       if (typeof onFilterChange === 'function') onFilterChange(matches);
     }, DEBOUNCE_WAIT);
-  }, [ignoreCase, filterIfNoInput, items, onFilterChange, filterBy]);
+  }, [ignoreCase, filterIfNoInput, items, onFilterChange, onInputChange, filterBy]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setValue(event.target.value);
-    filterItems_deb(event.target.value);
+    handleInputDebounced(event.target.value);
   };
 
   return (
