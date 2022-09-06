@@ -39,13 +39,13 @@ export default function SearchField<IT>({
 
       // Create regex query to match all separate words (plural or not)
       const query = ignoreCase ? value.toLowerCase() : value;
-      const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}?\\b)`);
+      const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}${token !== 's' ? '?' : ''}\\b)`);
       const regexp = new RegExp(tokens?.join('') || '', (ignoreCase ? 'i' : ''));
 
-      // Make sure there are tokens, otherwise search is empty or invalid
-      const noTokens = !tokens || tokens.length === 0;
+      // Filter results by regex matcher
+      const invalidQuery = !query || !tokens || tokens.length === 0;
       const matches = (
-        noTokens || (!value && filterIfNoInput) ? []
+        invalidQuery || (!value && filterIfNoInput) ? []
         : items.filter((item) => {
           const filterValue = (
             typeof filterBy !== 'function' ? value
