@@ -7,7 +7,7 @@ interface SearchBarProps<IT> {
   items: IT[],
   placeholder: string,
   filterBy?: (value: IT) => string,
-  onFilterChange: (matches: IT[]) => void,
+  onFilterChange?: (matches: IT[]) => void,
   filterIfNoInput?: boolean,
   ignoreCase?: boolean,
 }
@@ -49,7 +49,7 @@ export default function SearchField<IT>({
       );
 
       // Trigger filter change listener
-      onFilterChange(matches);
+      if (typeof onFilterChange === 'function') onFilterChange(matches);
     }, DEBOUNCE_WAIT);
   }, [ignoreCase, filterIfNoInput, items, onFilterChange, filterBy]);
 
