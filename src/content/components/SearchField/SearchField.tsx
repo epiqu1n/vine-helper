@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 import styles from './SearchField.module.scss';
+import { pluralize } from '../../../modules/utils';
 
 interface SearchBarProps<IT> {
   items: IT[],
@@ -28,13 +29,20 @@ export default function SearchField<IT>({
   const filterItems_deb = useMemo(() => {
     return debounce((value: string) => {
       const query = ignoreCase ? value.toLowerCase() : value;
+      const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}?\\b)`);
+      if (!tokens || tokens.length === 0) return [];
+
+      const regexp = new RegExp(tokens.join(''), (ignoreCase ? 'i' : ''));
+      console.log(tokens, regexp);
+
       const matches = !value && filterIfNoInput ? [] : items.filter((item) => {
         const filterValue = (
           typeof filterBy !== 'function' ? value
           : ignoreCase ? filterBy(item).toLowerCase()
           : filterBy(item)
         );
-        return filterValue.match(query);
+
+        return !!filterValue.match(regexp);
       });
       onFilterChange(matches);
     }, DEBOUNCE_WAIT);
