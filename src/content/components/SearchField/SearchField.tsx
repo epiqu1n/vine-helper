@@ -48,8 +48,10 @@ export default function SearchField<IT>({
       if (typeof onInputChange === 'function') onInputChange(value);
 
       // Create regex query to match all separate words (plural or not)
+      // TODO: Add option for partial vs whole word matching
+      // `(?=.*\\b${pluralize(token)}${token !== 's' ? '?' : ''}\\b)`
       const query = ignoreCase ? value.toLowerCase() : value;
-      const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*\\b${pluralize(token)}${token !== 's' ? '?' : ''}\\b)`);
+      const tokens = query.match(/\b\w+\b/g)?.map((token) => `(?=.*${pluralize(token)}${token !== 's' ? '?' : ''})`);
       const regexp = new RegExp(tokens?.join('') || '', (ignoreCase ? 'i' : ''));
 
       // Filter results by regex matcher
